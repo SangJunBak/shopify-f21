@@ -10,3 +10,9 @@ export const secondary = persianGreen;
 export const accent = sandyBrown;
 
 /* Grayscale */
+export const black = '#000000'
+export const white = '#FFFFFF'
+export const gray1 = '#FAFAFA';
+export const gray2 = '#E0E0E0';
+export const gray3 = '#9E9E9E';
+export const gray4 = '#424242';
