@@ -21,3 +21,17 @@ export type SearchRequestPayload = {
   page?: number;
   callback?: string;
 };
+
+export type apiData = {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
+};
+
+export type SearchResponsePayload = {
+  Search: apiData[];
+  totalResults: string;
+  Response: string;
+};
