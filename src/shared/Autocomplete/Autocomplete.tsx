@@ -1,7 +1,17 @@
-import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import React, { FC } from "react";
 import TextField from "@material-ui/core/TextField";
 import MaterialAutocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
+const useStyles = makeStyles({
+  root: {
+    width: 300,
+  },
+  paper: {
+    fontSize: "0.5rem",
+  },
+});
 
 interface CountryType {
   name: string;
@@ -13,10 +23,11 @@ function sleep(delay = 0) {
   });
 }
 
-const Autocomplete = () => {
+const Autocomplete: FC<{}> = (props) => {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<CountryType[]>([]);
   const loading = open && options.length === 0;
+  const classes = useStyles(props);
 
   React.useEffect(() => {
     let active = true;
@@ -54,7 +65,8 @@ const Autocomplete = () => {
 
   return (
     <MaterialAutocomplete
-      style={{ width: 300 }}
+      debug={true}
+      classes={classes}
       open={open}
       onOpen={() => {
         setOpen(true);
