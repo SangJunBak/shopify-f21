@@ -17,6 +17,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-window": "^1.8.2",
     "@types/styled-components": "^5.1.2",
+    "@types/styled-theming": "^2.2.5",
     "axios": "^0.20.0",
     "moment": "^2.27.0",
     "react": "^16.13.1",
@@ -28,6 +29,7 @@
     "react-window": "^1.8.5",
     "styled-components": "^5.1.1",
     "styled-components-breakpoint": "^3.0.0-preview.20",
+    "styled-theming": "^2.2.0",
     "typescript": "~3.7.2"
   },
   "scripts": {

@@ -1,13 +1,43 @@
 import { createMuiTheme } from "@material-ui/core";
+import { initialTheme } from "constants/theme";
 import ListView from "features/ListView/ListView";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
-import React from "react";
+import React, { useState } from "react";
 import { ReactQueryDevtools } from "react-query-devtools";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider as MaterialThemeProvider } from "@material-ui/core/styles";
+import { Card } from "shared/Card/Card";
+import Drawer from "shared/Drawer/Drawer";
+import styled, { ThemeProvider as SCThemeProvider } from "styled-components";
 
-const theme = createMuiTheme({
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+const AppBarContainer = styled.div`
+  flex: 0 0 auto;
+`;
+
+const BodyContainer = styled.div<{ drawerOpen?: boolean }>`
+  flex: 1;
+  flex-grow: ${({ drawerOpen }) => (drawerOpen ? 0 : 1)};
+  min-height: 0;
+  overflow-y: auto;
+  transition: flex 0.3s;
+`;
+
+const StyledDrawer = styled(Drawer)`
+  flex: 0 1 auto;
+  flex-grow: ${({ open }) => (open ? 1 : 0)};
+  transition: flex 0.3s;
+`;
+
+const materialTheme = createMuiTheme({
   typography: {
+    // fontSize: 12,
     fontFamily: [
       "-apple-system",
       "BlinkMacSystemFont",
@@ -25,15 +55,29 @@ const theme = createMuiTheme({
 });
 
 function App() {
+  const [open, setOpen] = useState(false);
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <ThemeProvider theme={theme}>
-          <div className="App">
-            <header className="App-header">Shoppies</header>
-            <ListView />
-          </div>
-        </ThemeProvider>
+        <MaterialThemeProvider theme={materialTheme}>
+          <SCThemeProvider theme={initialTheme}>
+            <AppContainer>
+              <AppBarContainer>
+                <header className="App-header">Shoppies</header>
+              </AppBarContainer>
+              <BodyContainer drawerOpen={open}>
+                <Card>
+                  <ListView />
+                </Card>
+              </BodyContainer>
+              <StyledDrawer
+                title="Nominations"
+                open={open}
+                onCollapse={(open: boolean) => setOpen(!open)}
+              />
+            </AppContainer>
+          </SCThemeProvider>
+        </MaterialThemeProvider>
       </MuiPickersUtilsProvider>
       <ReactQueryDevtools />
     </>

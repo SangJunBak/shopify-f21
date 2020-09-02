@@ -11,17 +11,9 @@ import { makeStyles } from "@material-ui/core/styles";
 type RadioGroupProps = {};
 
 // TODO: DRY 0.8rem
-const useFormLabelStyles = makeStyles({
-  root: {
-    fontSize: "0.8rem",
-  },
-});
+const useFormLabelStyles = makeStyles({});
 
-const useFormControlLabelStyles = makeStyles({
-  label: {
-    fontSize: "0.8rem",
-  },
-});
+const useFormControlLabelStyles = makeStyles({});
 
 // TODO: Make more dynamic
 // TODO: Sync up color scheme for all inputs

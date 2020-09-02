@@ -1,3 +1,4 @@
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Autocomplete as MaterialAutocomplete,
@@ -5,7 +6,7 @@ import {
 } from "@material-ui/lab";
 import { OMDB_SEARCH_QUERY } from "constants/queryKeys";
 import { getMovies } from "helpers/api";
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useState } from "react";
 import { useQuery } from "react-query";
 import Input from "shared/Input/Input";
 import RadioGroup from "shared/RadioGroup/RadioGroup";
@@ -16,13 +17,7 @@ import { type } from "types/apiPayload";
 
 type ListViewProps = {};
 
-const useStyles = makeStyles({
-  paper: {
-    fontSize: "0.8rem",
-  },
-});
-
-const options = ["Option 1", "Option 2"];
+const useStyles = makeStyles({});
 
 type AutocompleteProps = {};
 
@@ -61,8 +56,6 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
     searchQueryFunction
   );
 
-  console.log(data);
-
   return (
     <MaterialAutocomplete
       classes={classes}
@@ -75,7 +68,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
       renderInput={(params: AutocompleteRenderInputParams) => (
         <div ref={params.InputProps.ref}>
           <Input
-            style={{ fontSize: "0.8rem", width: "11rem" }}
+            style={{ width: "11rem" }}
             type="text"
             {...params.inputProps}
           />
@@ -96,6 +89,17 @@ const Search: FC = (props) => {
   return (
     <SearchContainer>
       <Autocomplete />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={false}
+            inputProps={{
+              "aria-label": "primary checkbox",
+            }}
+          />
+        }
+        label="Filter year"
+      />
       <YearPicker />
       <RadioGroup />
     </SearchContainer>

@@ -1,65 +1,90 @@
+import { white } from "constants/colors";
+import { primaryColor } from "constants/theme";
 import React, { FC } from "react";
 import styled from "styled-components";
 import { ExpandLess, ExpandMore, MenuOpen, Menu } from "@material-ui/icons";
-import { baseSpacingRem } from "constants/variables";
+import theme from "styled-theming";
 
 type DrawerProps = {
   position?: "left" | "bottom";
   className?: string;
   open?: boolean;
-  onCollapse?: () => void;
+  onCollapse?: (open: boolean) => void;
   title?: string;
 };
 
-const Container = styled.div``;
-const HeaderContainer = styled.div`
-  display: flex;
-  padding: ${baseSpacingRem / 2}rem ${baseSpacingRem}rem;
-  justify-content: space-between;
+const textColor = theme("mode", {
+  dark: white,
+  light: white,
+});
+
+const Container = styled.div<DrawerProps>`
+  background-color: ${primaryColor};
 `;
 
-const BottomHeader: FC<DrawerProps> = (props) => (
-  <HeaderContainer>
-    {props.children}
-    {props.open ? (
-      <ExpandLess onClick={props.onCollapse} />
-    ) : (
-      <ExpandMore onClick={props.onCollapse} />
-    )}
-  </HeaderContainer>
-);
+const HeaderContainer = styled.div`
+  display: flex;
+  padding: ${({ theme: { spacing } }) => `${spacing(0.5)} ${spacing()}`};
+  justify-content: space-between;
+  cursor: pointer;
+`;
+const HeaderTitle = styled.h3`
+  color: ${textColor};
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const LeftHeader: FC<DrawerProps> = (props) => (
-  <HeaderContainer>
-    {props.children}
-    {props.open ? (
-      <MenuOpen onClick={props.onCollapse} />
-    ) : (
-      <Menu onClick={props.onCollapse} />
-    )}
-  </HeaderContainer>
-);
+const HeaderIconContainer = styled.div`
+  margin-left: ${({ theme: { spacing } }) => spacing(0.25)};
+`;
 
-const getHeader = (props: DrawerProps) => {
-  switch (props.open) {
-    case true:
-      return LeftHeader;
-    default:
-      return BottomHeader;
-  }
-};
+// const LeftHeader: FC<DrawerProps> = (props) => (
+//   <HeaderContainer>
+//     {props.children}
+//     {props.open ? (
+//       <MenuOpen onClick={props.onCollapse} />
+//     ) : (
+//       <Menu onClick={props.onCollapse} />
+//     )}
+//   </HeaderContainer>
+// );
+//
+// const getHeader = (props: DrawerProps) => {
+//   switch (props.open) {
+//     case true:
+//       return LeftHeader;
+//     default:
+//       return BottomHeader;
+//   }
+// };
 
-const Drawer = (props: DrawerProps) => {
+const Drawer: FC<DrawerProps> = (props) => {
   const {
-    position = "left",
     className = "",
     open = false,
     onCollapse = (open: boolean) => {},
     title = "",
   } = props;
 
-  const Header = getHeader(props);
-  return <Container></Container>;
+  return (
+    <Container className={className} open={open}>
+      <HeaderContainer onClick={() => onCollapse(open)}>
+        <HeaderTitle>
+          {title}
+          <HeaderIconContainer>
+            {open ? (
+              <ExpandMore />
+            ) : (
+              <ExpandLess onClick={() => onCollapse(open)} />
+            )}
+          </HeaderIconContainer>
+        </HeaderTitle>
+      </HeaderContainer>
+      {props.children}
+    </Container>
+  );
 };
 
 export default Drawer;

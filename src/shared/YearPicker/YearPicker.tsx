@@ -30,6 +30,7 @@ const YearPicker: FC<YearPickerProps> = (props) => {
           defaultValue={textFieldProps.value as string[]}
           label={textFieldProps.label as string}
           readOnly
+          disabled
         />
       )}
     />
