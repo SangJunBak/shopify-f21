@@ -22,13 +22,13 @@ const Spongebob = styled.img.attrs({ src: ConfusedSpongebobURL })`
 `;
 
 const Text = styled.h3`
-  font-weight: 300;
+  font-weight: 200;
   margin-block-start: 0.5rem;
 `;
 
 export const Problem: FC<ProblemProps> = ({
   className = "",
-  height = "8rem",
+  height = "5rem",
   expand = true,
   children,
 }) => {

@@ -2,21 +2,17 @@ import { Collapse } from "@material-ui/core";
 import { bodyBackground } from "constants/theme";
 import { gray2, initial, white } from "constants/colors";
 import { barPaddingCSS } from "constants/mixins";
-import { secondaryColor } from "constants/theme";
 import { BASE_PAGE_PADDING_REM, elevation1 } from "constants/variables";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
+import { FlexCenterHorizontally } from "shared/FlexCenterHorizontally/FlexCenterHorizontally";
+import { Problem } from "shared/Problem/Problem";
 import { Subtitle } from "shared/Subtitle/Subtitle";
 import styled from "styled-components/macro";
-import { ExpandLess, ExpandMore, MenuOpen, Menu } from "@material-ui/icons";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import theme from "styled-theming";
 
 type DrawerProps = {
-  position?: "left" | "bottom";
   className?: string;
-  open?: boolean;
-  onCollapse?: (open: boolean) => void;
-  title?: string;
-  orientation?: "top-down" | "bottom-up";
 };
 
 const textColor = theme("mode", {
@@ -54,34 +50,28 @@ const CollapseWrapper = styled.div`
   overflow-x: auto;
 `;
 
-const Drawer: FC<DrawerProps> = (props) => {
-  const {
-    className = "",
-    open = false,
-    onCollapse = (open: boolean) => {},
-    title = "",
-    orientation = "bottom-up",
-  } = props;
+export const NominationsDrawer: FC<DrawerProps> = (props) => {
+  const { className = "" } = props;
 
-  const iconUp = orientation === "bottom-up";
+  const [open, setOpen] = useState(false);
+  const onCollapse = () => setOpen((prevOpen) => !prevOpen);
 
   return (
-    <Container className={className} open={open}>
+    <Container className={className}>
       <Collapse in={open}>
-        <CollapseWrapper>{props.children}</CollapseWrapper>
+        <CollapseWrapper>
+          {/*<MovieCard />*/}
+          <FlexCenterHorizontally>
+            <Problem>You currently have no nominations!</Problem>
+          </FlexCenterHorizontally>
+        </CollapseWrapper>
       </Collapse>
-      <HeaderContainer onClick={() => onCollapse(open)}>
-        <Subtitle>{title}</Subtitle>
+      <HeaderContainer onClick={onCollapse}>
+        <Subtitle>Nominations</Subtitle>
         <HeaderIconContainer>
-          {(iconUp && open) || (!iconUp && !open) ? (
-            <ExpandLess onClick={() => onCollapse(open)} />
-          ) : (
-            <ExpandMore />
-          )}
+          {open ? <ExpandLess onClick={onCollapse} /> : <ExpandMore />}
         </HeaderIconContainer>
       </HeaderContainer>
     </Container>
   );
 };
-
-export default Drawer;

@@ -7,7 +7,6 @@ import theme from "styled-theming";
 
 type HeaderProps = {
   className?: string;
-  title?: string;
 };
 
 const topbarColor = theme("mode", {
@@ -29,10 +28,10 @@ const Title = styled.h1`
 `;
 
 export const Header: FC<HeaderProps> = (props) => {
-  const { className = "", title } = props;
+  const { className = "" } = props;
   return (
     <StyledCard rounded={false} className={className}>
-      <Title>{title}</Title>
+      <Title>Shoppies</Title>
     </StyledCard>
   );
 };

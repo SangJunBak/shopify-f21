@@ -1,17 +1,13 @@
-import {
-  filterArrayByKey,
-  filterObjectByKey,
-  findAndReplaceByKey,
-} from "helpers/immutable";
+import { findAndReplaceByKey } from "helpers/immutable";
 import { useLocallyPersistedReducer } from "hooks/useLocalStorage";
+import produce, { Draft } from "immer";
 import React, { Dispatch } from "react";
 import { Movie } from "types/movie";
+import { remove } from "lodash";
 
 type State = {
-  nominationsByID: {
-    [key: string]: Movie;
-  };
-  allNominations: string[];
+  readonly nominationsByID: Record<string, Movie>;
+  readonly allNominations: string[];
 };
 type Action =
   | {
@@ -29,7 +25,7 @@ type Action =
   | {
       type: "REPLACE_NOMINATION_BY_ID";
       payload: {
-        id: string;
+        targetID: string;
         movie: Movie;
       };
     };
@@ -50,62 +46,49 @@ function isAtMaxCapacity(allNominations: string[]) {
   return allNominations.length >= 5;
 }
 
-function nominationsReducer(state: State, action: Action) {
+const nominationsReducer = produce((state: Draft<State>, action: Action) => {
   switch (action.type) {
     case "APPEND_NOMINATION": {
       const {
         payload: { movie },
       } = action;
       if (isAtMaxCapacity(state.allNominations)) {
-        return state;
+        console.error("At max capacity");
+        return;
       }
-      return {
-        ...state,
-        nominationsByID: {
-          ...state.nominationsByID,
-          [movie.id]: movie,
-        },
-        allNominations: [...state.allNominations, movie.id],
-      };
+      state.nominationsByID[movie.id] = movie;
+      state.allNominations.push(movie.id);
+      return;
     }
     case "REMOVE_NOMINATION_BY_ID": {
       const {
         payload: { id },
       } = action;
-
-      return {
-        ...state,
-        nominationsByID: filterObjectByKey<Movie>(state.nominationsByID, id),
-        allNominations: filterArrayByKey<string>(state.allNominations, id),
-      };
+      delete state.nominationsByID[id];
+      remove(state.allNominations, id);
+      return;
     }
     case "REPLACE_NOMINATION_BY_ID": {
       if (!isAtMaxCapacity(state.allNominations)) {
-        return state;
+        console.error("Shouldn't replace if we're not at max capacity");
+        return;
       }
       const {
-        payload: { id, movie },
+        payload: { targetID, movie },
       } = action;
-
-      const newNominationsByID = filterObjectByKey<Movie>(
-        state.nominationsByID,
-        id
+      delete state.nominationsByID[targetID];
+      state.nominationsByID[targetID] = movie;
+      state.allNominations = findAndReplaceByKey(
+        state.allNominations,
+        targetID,
+        movie.id
       );
-      newNominationsByID[id] = movie;
-      return {
-        ...state,
-        nominationsByID: newNominationsByID,
-        allNominations: findAndReplaceByKey<string>(
-          state.allNominations,
-          id,
-          movie.id
-        ),
-      };
+      return;
     }
     default:
-      return state;
+      return;
   }
-}
+});
 
 function NominationsProvider(props: NominationsProviderProps) {
   const [nominations, dispatchNominations] = useLocallyPersistedReducer<
