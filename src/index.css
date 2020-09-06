@@ -1,6 +1,16 @@
 @import-normalize;
 
 
+/*TODO: Move to styled components*/
+* {
+  box-sizing: border-box;
+  color: #151b26;
+}
+
+a {
+  color: #32c1ff;
+}
+
 /*!* Fluid Typography START *!*/
 html {
   font-size: 16px;
@@ -15,10 +25,20 @@ html {
     font-size: 22px;
   }
 }
+
+@media screen and (min-width: 2560px) {
+  html {
+    font-size: 30px;
+  }
+}
 /* Fluid Typography END */
 html, body, #root {
   height: 100%;
   width: 100%;
+}
+
+#root {
+  display: flex;
 }
 
 body {

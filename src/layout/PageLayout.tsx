@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import styled, { css } from "styled-components";
+import styled, { css } from "styled-components/macro";
 import breakpoint from "styled-components-breakpoint";
 import { flexAuto, flexColumn, flexColumnReverse, flexShrink } from "css/flex";
 

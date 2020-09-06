@@ -1,19 +1,19 @@
 import {
   black,
+  blackPearl,
   burntSienna,
   charcoal,
+  culturedGrey,
   gray4,
   orangeYellowCrayola,
   persianGreen,
   sandyBrown,
   white,
 } from "constants/colors";
-import { baseSpacingRem } from "constants/variables";
 import theme from "styled-theming";
 
 export type Theme = {
   mode: "light" | "dark";
-  spacing: (scale?: number) => string;
   primaryColor: string;
   secondaryColor: string;
   accentColor: string;
@@ -21,7 +21,6 @@ export type Theme = {
 
 export const initialTheme = {
   mode: "light",
-  spacing: (scale = 1) => `${scale * baseSpacingRem}rem`,
 };
 
 export const primaryColor = theme("mode", {
@@ -37,4 +36,9 @@ export const secondaryColor = theme("mode", {
 export const accentColor = theme("mode", {
   dark: sandyBrown,
   light: sandyBrown,
+});
+
+export const bodyBackground = theme("mode", {
+  light: culturedGrey,
+  dark: blackPearl,
 });

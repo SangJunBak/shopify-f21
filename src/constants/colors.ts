@@ -5,11 +5,15 @@ export const sandyBrown = "#f4a261ff";
 export const burntSienna = "#e76f51ff";
 
 /*Color scheme*/
+export const aluminumFoil = "#D1DBDE";
+export const blackPearl = "#07090A";
+export const culturedGrey = "#f6f8f9";
+export const gray2 = "#e8ecee";
 
+export const hrefBlue = "#32c1ff";
 /* Grayscale */
 export const black = "#000000";
 export const white = "#FFFFFF";
-export const gray1 = "#FAFAFA";
-export const gray2 = "#E0E0E0";
-export const gray3 = "#9E9E9E";
+export const initial = "#151b26";
+
 export const gray4 = "#424242";

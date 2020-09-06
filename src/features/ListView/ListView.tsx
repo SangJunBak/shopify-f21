@@ -11,7 +11,7 @@ import { useQuery } from "react-query";
 import Input from "shared/Input/Input";
 import RadioGroup from "shared/RadioGroup/RadioGroup";
 import YearPicker from "shared/YearPicker/YearPicker";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Movie } from "types/movie";
 import { type } from "types/apiPayload";
 

@@ -1,35 +1,38 @@
-import React, { FC } from 'react';
-import styled from "styled-components";
+import { gray2, white } from "constants/colors";
+import { barPaddingCSS } from "constants/mixins";
+import React, { FC } from "react";
+import { Card } from "shared/Card/Card";
+import styled, { css } from "styled-components/macro";
+import theme from "styled-theming";
 
 type HeaderProps = {
-    leftChildren?: React.ReactNode,
-    rightChildren?: React.ReactNode,
+  className?: string;
+  title?: string;
 };
 
-const Container = styled.div`
+const topbarColor = theme("mode", {
+  light: white,
+});
+
+export const topbarHeaderPadding = css`
+  padding: 0 2rem;
+`;
+
+const StyledCard = styled(Card)`
   display: flex;
+  ${topbarHeaderPadding};
+  background-color: ${topbarColor};
 `;
 
-const LeftChildren = styled.div`
-  
+const Title = styled.h1`
+  font-weight: 500;
 `;
 
-const RightChildren = styled.div`
-  
-`;
-
-const Header: FC<HeaderProps> = (props) => {
-
+export const Header: FC<HeaderProps> = (props) => {
+  const { className = "", title } = props;
   return (
-      <Container>
-          <LeftChildren>
-              {props.leftChildren}
-          </LeftChildren>
-          <RightChildren>
-              {props.rightChildren}
-          </RightChildren>
-      </Container>
+    <StyledCard rounded={false} className={className}>
+      <Title>{title}</Title>
+    </StyledCard>
   );
 };
-
-export default Header;
