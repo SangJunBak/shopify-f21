@@ -1,28 +1,22 @@
 import { createMuiTheme } from "@material-ui/core";
 import { culturedGrey, blackPearl, gray2, white } from "constants/colors";
 import { flexCol, flexWrap } from "constants/mixins";
-import {
-  accentColor,
-  bodyBackground,
-  initialTheme,
-  primaryColor,
-} from "constants/theme";
-import { BASE_PAGE_PADDING_REM, elevation1 } from "constants/variables";
+import { bodyBackground, initialTheme } from "constants/theme";
+import { BASE_PAGE_PADDING_REM } from "constants/variables";
 import ListView from "features/ListView/ListView";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import React, { useState } from "react";
 import { ReactQueryDevtools } from "react-query-devtools";
 import { ThemeProvider as MaterialThemeProvider } from "@material-ui/core/styles";
-import { Card } from "shared/Card/Card";
 import Drawer from "shared/Drawer/Drawer";
-import { Header, topbarHeaderPadding } from "shared/Header/Header";
+import { FlexCenterHorizontally } from "shared/FlexCenterHorizontally/FlexCenterHorizontally";
+import { Header } from "shared/Header/Header";
 import { MovieCard } from "shared/MovieCard/MovieCard";
+import { Problem } from "shared/Problem/Problem";
 import styled, {
-  css,
   ThemeProvider as SCThemeProvider,
 } from "styled-components/macro";
-import theme from "styled-theming";
 
 const AppContainer = styled.div`
   ${flexCol};
@@ -31,7 +25,6 @@ const AppContainer = styled.div`
   background-color: ${bodyBackground};
 `;
 
-// TODO: Make into separate layout component + hook
 const StyledHeader = styled(Header)`
   flex: 0 0 auto;
 `;
@@ -42,29 +35,8 @@ const BodyContainer = styled.div`
   padding: ${BASE_PAGE_PADDING_REM}rem;
 `;
 
-const TabsContainer = styled.div`
-  border-top: 1px solid ${gray2};
-  box-shadow: ${elevation1};
-  min-height: 1rem;
-  background-color: ${white};
-`;
-
 const StyledDrawer = styled(Drawer)`
   flex: 0 1 auto;
-  //transition: all 0.3s;
-  // flex-grow: ${({ open }) => (open ? 1 : 0)};
-  // max-height: ${({ open }) => (open ? "none" : 0)};
-  //flex-basis: 0;
-  //min-height: 0;
-  //overflow-y: hidden;
-`;
-
-const MobileBodyContainer = styled(BodyContainer)<{ drawerOpen?: boolean }>`
-  flex: 1;
-  flex-grow: ${({ drawerOpen }) => (drawerOpen ? "0" : 1)};
-  min-height: 0;
-  overflow-y: auto;
-  transition: flex 0.3s;
 `;
 
 const materialTheme = createMuiTheme({
@@ -87,7 +59,7 @@ const materialTheme = createMuiTheme({
 });
 
 function App() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
@@ -103,22 +75,18 @@ function App() {
                 onCollapse={(open: boolean) => setOpen(!open)}
                 title="Nominations"
               >
-                <MovieCard />
+                {/*<MovieCard />*/}
+                <FlexCenterHorizontally>
+                  <Problem>You currently have no nominations!</Problem>
+                </FlexCenterHorizontally>
               </StyledDrawer>
-              <BodyContainer>{/*<ListView />*/}</BodyContainer>
+              <BodyContainer>
+                {/*<ListView />*/}
+                {/*<FlexCenterHorizontally>*/}
+                {/*  <Problem message="Sorry, seems like no results were found..." />*/}
+                {/*</FlexCenterHorizontally>*/}
+              </BodyContainer>
             </AppContainer>
-            {/*Mobile*/}
-            {/*<AppContainer>
-              <StyledHeader title="Shoppies"></StyledHeader>
-              <MobileBodyContainer drawerOpen={open}>
-                <ListView />
-              </MobileBodyContainer>
-              <StyledDrawer
-                title="Nominations"
-                open={open}
-                onCollapse={(open: boolean) => setOpen(!open)}
-              />
-            </AppContainer>*/}
           </SCThemeProvider>
         </MaterialThemeProvider>
       </MuiPickersUtilsProvider>

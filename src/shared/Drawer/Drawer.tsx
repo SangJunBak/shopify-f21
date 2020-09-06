@@ -49,6 +49,9 @@ const HeaderIconContainer = styled.div`
 const CollapseWrapper = styled.div`
   background-color: ${bodyBackground};
   padding: 1rem ${BASE_PAGE_PADDING_REM}rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 `;
 
 const Drawer: FC<DrawerProps> = (props) => {

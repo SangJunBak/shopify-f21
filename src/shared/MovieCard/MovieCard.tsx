@@ -21,7 +21,7 @@ const SAMPLE_MOVIE = {
 const StyledCard = styled(Card)`
   background-color: ${white};
   display: flex;
-  height: 9rem;
+  height: 8rem;
   max-width: 25rem;
 `;
 
@@ -36,12 +36,6 @@ const SecondaryButton = styled(Button)`
   margin-left: 1rem;
 `;
 
-const Image = styled.img`
-  flex: 0 0 auto;
-  max-height: 100%;
-  border-radius: 0.25rem 0 0 0.25rem;
-`;
-
 const Content = styled.div`
   ${flexCol};
   flex: 1;
@@ -52,6 +46,12 @@ const Content = styled.div`
 const Description = styled.div`
   ${flexCol};
   flex: 1;
+`;
+
+const ImageContainer = styled.img`
+  flex: 0 0 auto;
+  max-height: 100%;
+  border-radius: 0.25rem 0 0 0.25rem;
 `;
 
 const Title = styled.h5`
@@ -71,7 +71,7 @@ const createIMDBLink = (imdbID: string): string =>
 export const MovieCard: FC<MovieCardProps> = (props) => {
   return (
     <StyledCard>
-      <Image src={SAMPLE_MOVIE.poster} alt={""} />
+      <ImageContainer src={SAMPLE_MOVIE.poster} alt={""} />
       {/*TODO: Create alt and placeholder*/}
       <Content>
         <Description>
