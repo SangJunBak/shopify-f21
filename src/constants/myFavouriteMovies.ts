@@ -1,52 +1,53 @@
 import { apiData } from "types/apiPayload";
+import { Movie } from "types/movie";
 
-export const myFavouriteMovies: apiData[] = [
+export const MY_FAVOURITE_MOVIES: Movie[] = [
   {
-    Title: "Wolf Children",
-    Year: "2012",
-    imdbID: "tt2140203",
-    Type: "movie",
-    Poster:
+    title: "Wolf Children",
+    year: "2012",
+    id: "tt2140203",
+    type: "movie",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BYzQxNDZhNDUtNDUwOC00NjQyLTg2OWUtZWVlYThjYjYyMTc2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
   },
   {
-    Title: "Oldboy",
-    Year: "2003",
-    imdbID: "tt0364569",
-    Type: "movie",
-    Poster:
+    title: "Oldboy",
+    year: "2003",
+    id: "tt0364569",
+    type: "movie",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BMTI3NTQyMzU5M15BMl5BanBnXkFtZTcwMTM2MjgyMQ@@._V1_SX300.jpg",
   },
   {
-    Title: "Whiplash",
-    Year: "2014",
-    imdbID: "tt2582802",
-    Type: "movie",
-    Poster:
+    title: "Whiplash",
+    year: "2014",
+    id: "tt2582802",
+    type: "movie",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BOTA5NDZlZGUtMjAxOS00YTRkLTkwYmMtYWQ0NWEwZDZiNjEzXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
   },
   {
-    Title: "The Shawshank Redemption",
-    Year: "1994",
-    imdbID: "tt0111161",
-    Type: "movie",
-    Poster:
+    title: "The Shawshank Redemption",
+    year: "1994",
+    id: "tt0111161",
+    type: "movie",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
   },
   {
-    Title: "Pulp Fiction",
-    Year: "1994",
-    imdbID: "tt0110912",
-    Type: "movie",
-    Poster:
+    title: "Pulp Fiction",
+    year: "1994",
+    id: "tt0110912",
+    type: "movie",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
   },
   {
-    Title: "When Harry Met Sally...",
-    Year: "1989",
-    imdbID: "tt0098635",
-    Type: "movie",
-    Poster:
+    title: "When Harry Met Sally...",
+    year: "1989",
+    id: "tt0098635",
+    type: "movie",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BMjE0ODEwNjM2NF5BMl5BanBnXkFtZTcwMjU2Mzg3NA@@._V1_SX300.jpg",
   },
 ];

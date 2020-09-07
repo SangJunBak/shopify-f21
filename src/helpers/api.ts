@@ -5,6 +5,7 @@ import { apiData, SearchRequestPayload } from "types/apiPayload";
 const httpClient = axios.create({
   params: {
     apikey: getOMDBKey(),
+    type: "movie",
   },
   baseURL: "http://www.omdbapi.com/",
 });

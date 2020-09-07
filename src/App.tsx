@@ -1,7 +1,8 @@
-import { flexCol, flexWrap } from "constants/mixins";
+import { flexCol } from "constants/mixins";
 import { bodyBackground } from "constants/theme";
 import { BASE_PAGE_PADDING_REM } from "constants/variables";
 import Footer from "features/Footer/Footer";
+import MovieResults from "features/MovieResults/MovieResults";
 import React from "react";
 import { NominationsDrawer } from "features/NominationsDrawer/NominationsDrawer";
 import { Header } from "features/Header/Header";
@@ -19,10 +20,11 @@ const StyledHeader = styled(Header)`
 `;
 
 const BodyContainer = styled.div`
-  ${flexWrap};
   flex: 1;
-  padding: ${BASE_PAGE_PADDING_REM}rem;
+  overflow-y: auto;
 `;
+
+const StyledMovieResults = styled(MovieResults)``;
 
 const StyledNominationsDrawer = styled(NominationsDrawer)`
   flex: 0 1 auto;
@@ -34,11 +36,12 @@ function App() {
       <StyledHeader />
       <StyledNominationsDrawer />
       <BodyContainer>
-        {/*<ListView />*/}
-        {/*<FlexCenterHorizontally>*/}
-        {/*  <Problem message="Sorry, seems like no results were found..." />*/}
-        {/*</FlexCenterHorizontally>*/}
+        <StyledMovieResults />
       </BodyContainer>
+      {/*<ListView />*/}
+      {/*<FlexCenterHorizontally>*/}
+      {/*  <Problem message="Sorry, seems like no results were found..." />*/}
+      {/*</FlexCenterHorizontally>*/}
       <Footer />
     </AppContainer>
   );

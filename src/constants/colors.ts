@@ -17,3 +17,5 @@ export const white = "#FFFFFF";
 export const initial = "#151b26";
 
 export const gray4 = "#424242";
+
+export const gray3 = "#cbd4db";

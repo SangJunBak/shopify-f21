@@ -28,9 +28,14 @@ const materialTheme = createMuiTheme({
   },
 });
 
+const theme = {
+  ...materialTheme,
+  mode: "light",
+};
+
 ReactDOM.render(
-  <MaterialThemeProvider theme={materialTheme}>
-    <SCThemeProvider theme={initialTheme}>
+  <MaterialThemeProvider theme={theme}>
+    <SCThemeProvider theme={theme}>
       <App />
       <ReactQueryDevtools />
     </SCThemeProvider>

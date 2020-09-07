@@ -6,8 +6,14 @@ import { Card } from "shared/Card/Card";
 import { Subtitle } from "shared/Subtitle/Subtitle";
 import styled from "styled-components/macro";
 import { OpenInNew } from "@material-ui/icons";
+import { Movie } from "types/movie";
 
-type MovieCardProps = {};
+export const MOVIE_CARD_MIN_WIDTH_REM = 16;
+
+type MovieCardProps = {
+  className?: string;
+  movie?: Movie;
+};
 
 const SAMPLE_MOVIE = {
   poster:
@@ -22,7 +28,7 @@ const StyledCard = styled(Card)`
   background-color: ${white};
   display: flex;
   height: 8rem;
-  max-width: 25rem;
+  min-width: ${MOVIE_CARD_MIN_WIDTH_REM}rem;
 `;
 
 const StyledOpenInNew = styled(OpenInNew)`
@@ -69,16 +75,17 @@ const createIMDBLink = (imdbID: string): string =>
   `https://www.imdb.com/title/${imdbID}`;
 
 export const MovieCard: FC<MovieCardProps> = (props) => {
+  const { className = "", movie = {} as Movie } = props;
   return (
-    <StyledCard>
-      <ImageContainer src={SAMPLE_MOVIE.poster} alt={""} />
+    <StyledCard className={className}>
+      <ImageContainer src={movie.poster} alt={movie.title} />
       {/*TODO: Create alt and placeholder*/}
       <Content>
         <Description>
           <Title>
-            {SAMPLE_MOVIE.title}
+            {movie.title}
             <a
-              href={createIMDBLink(SAMPLE_MOVIE.id)}
+              href={createIMDBLink(movie.id)}
               target="_blank"
               rel="noopener noreferrer"
               title="IMDB Link"
@@ -86,7 +93,7 @@ export const MovieCard: FC<MovieCardProps> = (props) => {
               <StyledOpenInNew />
             </a>
           </Title>
-          <Subtitle>({SAMPLE_MOVIE.year})</Subtitle>
+          <Subtitle>({movie.year})</Subtitle>
         </Description>
         <ButtonContainer>
           <Button size="small">Nominate</Button>
