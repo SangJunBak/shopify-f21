@@ -12,6 +12,7 @@ Technical Requirements: https://docs.google.com/document/d/1AZO0BZwn1Aogj4f3PDNe
 * Nominations are saved via localStorage
 * IMDB links on each movie/nomination
 * Loading and error states (type and enter "he" in the search bar. Also each loading image will have a placeholder)
+* If no nominations have been added, the nominations drawer is closed, and a user nominates the movie, the drawer will slide open and it will auto-scroll to the movie you just added 
 
 
 ## More about caching
