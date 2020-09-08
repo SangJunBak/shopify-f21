@@ -22,7 +22,7 @@ When you start typing for the movie in the searchbar, we prefetch the OMDB resul
 * For the cache, the stale time for each query is 5 minutes
 
 ## Future Improvements
-* If I had more time, I'd right unit tests for my reducers and maybe some integration tests for the scrolling logic using Jest, RTL, and RTL/hooks
+* If I had more time, I'd write unit tests for my reducers and maybe some integration tests for the scrolling logic using Jest, RTL, and RTL/hooks
 * Currently, we use localStorage to store all our nominations. However, nothing is implemented to keep the nomination data and the server data in sync. This is a possible edge case.
 * A "View more button" for each movie which shows more details from the API
 * Ability to filter by year 
