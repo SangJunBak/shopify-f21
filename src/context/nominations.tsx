@@ -5,6 +5,7 @@ import React, { Dispatch, useMemo } from "react";
 import { Movie } from "types/movie";
 import { pull } from "lodash";
 
+//TODO: Sync with backend data
 type State = {
   nominationsByID: Record<string, Movie>;
   allNominations: string[];

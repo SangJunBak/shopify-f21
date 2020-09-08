@@ -10,7 +10,7 @@ type CardProps = {
 const CardContainer = styled.div<CardProps>`
   box-shadow: ${elevation1};
 
-  ${({ rounded, theme }) =>
+  ${({ rounded }) =>
     rounded
       ? css`
           border-radius: 0.25rem;

@@ -9,9 +9,9 @@ import React, {
   SetStateAction,
 } from "react";
 import { usePaginatedQuery } from "react-query";
+import { useStateTuple } from "types/useStateTuple";
 
 type MovieResultsProviderProps = { children: React.ReactNode };
-type useStateTuple<T> = [T, Dispatch<SetStateAction<T>>];
 
 const SearchValueContext = createContext<useStateTuple<string> | null>(null);
 const PageContext = createContext<useStateTuple<number> | null>(null);

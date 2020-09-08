@@ -1,19 +1,29 @@
-@import-normalize;
+import {
+  higherSurface,
+  href,
+  placeholderTextColor,
+  textColor,
+} from "constants/theme";
+import { createGlobalStyle } from "styled-components/macro";
 
-
-/*TODO: Move to styled components*/
-* {
+export const GlobalStyle = createGlobalStyle`
+  * {
   box-sizing: border-box;
 }
 
-a {
-  color: #32c1ff;
+input {
+  background-color: ${higherSurface};
+  color: ${textColor};
+}
+
+input::placeholder {
+  color: ${placeholderTextColor};
 }
 
 /*!* Fluid Typography START *!*/
 html {
   font-size: 16px;
-  color: #151b26;
+  color: ${textColor};
 }
 @media screen and (min-width: 320px) {
   html {
@@ -32,6 +42,7 @@ html {
   }
 }
 /* Fluid Typography END */
+
 html, body, #root {
   height: 100%;
   width: 100%;
@@ -54,3 +65,5 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+`;

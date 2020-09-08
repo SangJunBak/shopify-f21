@@ -1,6 +1,7 @@
 import { CircularProgress, useMediaQuery, useTheme } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import { gray2, white } from "constants/colors";
+import { gray2 } from "constants/colors";
+import { divider, surface } from "constants/theme";
 import { NUM_RESULTS_PER_PAGE } from "constants/variables";
 import { useMovieResults } from "context/movieResults";
 import React, { FC } from "react";
@@ -11,8 +12,8 @@ type FooterProps = {
 };
 
 const FooterContainer = styled.footer`
-  border-top: 1px solid ${gray2};
-  background-color: ${white};
+  border-top: 1px solid ${divider};
+  background-color: ${surface};
   display: flex;
   justify-content: center;
   align-items: center;

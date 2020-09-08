@@ -1,6 +1,7 @@
 import { Skeleton } from "@material-ui/lab";
-import { white } from "constants/colors";
+import { darkPurple, white } from "constants/colors";
 import { flexCol } from "constants/mixins";
+import { href, surface, textColor } from "constants/theme";
 import { useMenuActions } from "context/menu";
 import {
   useNominationsDispatch,
@@ -22,7 +23,7 @@ type MovieCardProps = {
 };
 
 const StyledCard = styled(Card)`
-  background-color: ${white};
+  background-color: ${surface};
   display: flex;
   height: 8rem;
   min-width: ${MOVIE_CARD_MIN_WIDTH_REM}rem;
@@ -33,10 +34,6 @@ const StyledOpenInNew = styled(OpenInNew)`
     font-size: 1rem;
     margin-left: 0.25rem;
   }
-`;
-
-const SecondaryButton = styled(Button)`
-  margin-left: 1rem;
 `;
 
 const Content = styled.div`
@@ -58,7 +55,7 @@ const ImageContainer = styled.img<{ visible: boolean }>`
   max-height: 100%;
   border-radius: 0.25rem 0 0 0.25rem;
   display: ${({ visible }) => (visible ? "block" : "none")};
-  max-width: ${PLACEHOLDER_IMAGE_WIDTH_REM}rem;
+  width: ${PLACEHOLDER_IMAGE_WIDTH_REM}rem;
 `;
 
 const Title = styled.h5`
@@ -75,7 +72,7 @@ const EmptyImage = styled.div`
   width: ${PLACEHOLDER_IMAGE_WIDTH_REM}rem;
   justify-content: center;
   align-items: center;
-  color: ${white};
+  color: ${textColor};
 `;
 
 const ButtonContainer = styled.div`
@@ -83,7 +80,7 @@ const ButtonContainer = styled.div`
 `;
 
 const Hyperlink = styled.a`
-  color: #2196f3;
+  color: ${href};
 `;
 
 const createIMDBLink = (imdbID: string): string =>
@@ -144,7 +141,6 @@ export const MovieCard: FC<MovieCardProps> = (props) => {
         <ButtonContainer>
           {isNominated ? (
             <Button
-              size="small"
               onClick={() =>
                 dispatch?.({
                   type: "REMOVE_NOMINATION_BY_ID",
@@ -156,7 +152,6 @@ export const MovieCard: FC<MovieCardProps> = (props) => {
             </Button>
           ) : (
             <Button
-              size="small"
               onClick={() => {
                 if (allNominations.length <= 0) {
                   openMenu();

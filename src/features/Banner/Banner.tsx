@@ -1,16 +1,26 @@
-import { Fade, Grow } from "@material-ui/core";
+import { Fade } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import { gray5 } from "constants/colors";
+import { bannerGreen, bannerGreenBorder, gray4, gray5 } from "constants/colors";
 import { useNominationsState } from "context/nominations";
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components/macro";
+import theme from "styled-theming";
 
 type BannerProps = {};
 
+const bannerBorder = theme("mode", {
+  light: `1px solid ${bannerGreenBorder};`,
+  dark: "none",
+});
+const bannerBackgroundColor = theme("mode", {
+  light: bannerGreen,
+  dark: gray4,
+});
+
 const BannerContainer = styled.div`
   padding: 0.5rem 1rem;
-  border: 1px solid #b7eb8f;
-  background-color: #f6ffed;
+  border: ${bannerBorder};
+  background-color: ${bannerBackgroundColor};
   z-index: 1;
   position: fixed;
   left: 50%;

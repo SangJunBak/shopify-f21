@@ -1,11 +1,11 @@
 import { Collapse } from "@material-ui/core";
-import { bodyBackground } from "constants/theme";
+import { background, divider, surface, textColor } from "constants/theme";
 import { gray2, initial, white } from "constants/colors";
 import { barPaddingCSS } from "constants/mixins";
 import { BASE_PAGE_PADDING_REM, elevation1 } from "constants/variables";
 import { useMenuActions, useMenuState } from "context/menu";
 import { useNominationsState } from "context/nominations";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { CardZoom } from "shared/CardZoom/CardZoom";
 import { FlexCenterHorizontally } from "shared/FlexCenterHorizontally/FlexCenterHorizontally";
 import { MovieCard } from "shared/MovieCard/MovieCard";
@@ -13,7 +13,7 @@ import { Problem } from "shared/Problem/Problem";
 import { Subtitle } from "shared/Subtitle/Subtitle";
 import styled from "styled-components/macro";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import theme from "styled-theming";
+import { Movie } from "types/movie";
 
 type DrawerProps = {
   className?: string;
@@ -21,15 +21,10 @@ type DrawerProps = {
 
 const StyledCardZoom = styled(CardZoom)``;
 
-const textColor = theme("mode", {
-  dark: white,
-  light: initial,
-});
-
 const Container = styled.div<DrawerProps>`
-  border-top: 1px solid ${gray2};
+  border-top: 1px solid ${divider};
   box-shadow: ${elevation1};
-  background-color: ${white};
+  background-color: ${surface};
 `;
 
 const HeaderContainer = styled.div`
@@ -37,7 +32,7 @@ const HeaderContainer = styled.div`
   ${barPaddingCSS};
   justify-content: space-between;
   cursor: pointer;
-  color: ${textColor};
+  //color: ${textColor};
   align-items: center;
   padding: 0.5rem ${BASE_PAGE_PADDING_REM}rem;
 `;
@@ -49,7 +44,7 @@ const HeaderIconContainer = styled.div`
 `;
 
 const CollapseWrapper = styled.div`
-  background-color: ${bodyBackground};
+  background-color: ${background};
   padding: 1rem ${BASE_PAGE_PADDING_REM}rem;
   display: flex;
   flex-wrap: nowrap;
@@ -63,6 +58,7 @@ const CollapseWrapper = styled.div`
   }
 `;
 
+// TODO:
 export const NominationsDrawer: FC<DrawerProps> = (props) => {
   const { className = "" } = props;
 
@@ -70,10 +66,24 @@ export const NominationsDrawer: FC<DrawerProps> = (props) => {
   const { toggleMenu } = useMenuActions();
   const { nominations } = useNominationsState();
 
+  const prevNominations = useRef<Movie[]>(nominations);
+  const listContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (prevNominations.current.length < nominations.length) {
+      listContainerRef?.current?.scrollTo?.({
+        left: listContainerRef!.current!.scrollWidth,
+        behavior: "smooth",
+      });
+    }
+
+    prevNominations.current = nominations;
+  }, [nominations]);
+
   return (
     <Container className={className}>
       <Collapse in={menuState!.isMenuOpen}>
-        <CollapseWrapper>
+        <CollapseWrapper ref={listContainerRef}>
           {nominations.length <= 0 ? (
             <FlexCenterHorizontally>
               <Problem>You currently have no nominations!</Problem>
