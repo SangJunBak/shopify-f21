@@ -1,6 +1,10 @@
 import axios from "axios";
 import { getOMDBKey } from "helpers/env";
-import { apiData, SearchRequestPayload } from "types/apiPayload";
+import {
+  apiData,
+  SearchRequestPayload,
+  SearchResponsePayload,
+} from "types/apiPayload";
 
 const httpClient = axios.create({
   params: {
@@ -9,6 +13,13 @@ const httpClient = axios.create({
   },
   baseURL: "http://www.omdbapi.com/",
 });
+
+export const isError = (response: SearchResponsePayload) => {
+  return response?.Response === "False";
+};
+
+export const getErrorMessage = (response: SearchResponsePayload) =>
+  response?.Error ?? "";
 
 export async function getMovies(payload: SearchRequestPayload) {
   try {

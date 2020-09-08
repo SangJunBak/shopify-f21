@@ -120,11 +120,16 @@ function useNominationsState() {
     [nominationsState]
   );
 
+  const isAtMaxCapacityMemo = useMemo(
+    () => isAtMaxCapacity(nominationsState?.allNominations || []),
+    [nominationsState]
+  );
+
   return {
     nominationsByID: nominationsState?.nominationsByID ?? {},
     allNominations: nominationsState?.allNominations ?? [],
     nominations,
-    isAtMaxCapacity: isAtMaxCapacity(nominationsState?.allNominations || []),
+    isAtMaxCapacity: isAtMaxCapacityMemo,
   };
 }
 

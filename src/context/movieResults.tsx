@@ -1,3 +1,6 @@
+import { OMDB_SEARCH_QUERY } from "constants/queryKeys";
+import { DEFAULT_QUERY_STALE_TIME } from "constants/variables";
+import { paginationQueryFunction } from "helpers/query";
 import React, {
   useState,
   useContext,
@@ -5,6 +8,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
+import { usePaginatedQuery } from "react-query";
 
 type MovieResultsProviderProps = { children: React.ReactNode };
 type useStateTuple<T> = [T, Dispatch<SetStateAction<T>>];
@@ -33,11 +37,21 @@ const useMovieResults = () => {
       "useMovieResults must be used within a MovieResultsProvider"
     );
   }
+
+  const query = usePaginatedQuery(
+    [OMDB_SEARCH_QUERY, searchValue, page],
+    paginationQueryFunction,
+    {
+      staleTime: DEFAULT_QUERY_STALE_TIME,
+    }
+  );
+
   return {
     searchValue,
     page,
     setSearchValue,
     setPage,
+    query,
   };
 };
 

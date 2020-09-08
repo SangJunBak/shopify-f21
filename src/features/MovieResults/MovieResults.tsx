@@ -1,12 +1,12 @@
-import { useTheme, Zoom } from "@material-ui/core";
 import { muiMediaQuery } from "constants/mixins";
 import { MY_FAVOURITE_MOVIES } from "constants/myFavouriteMovies";
 import { OMDB_SEARCH_QUERY } from "constants/queryKeys";
 import { BASE_PAGE_PADDING_REM } from "constants/variables";
 import { useMovieResults } from "context/movieResults";
-import { paginationQueryFunction } from "hooks/useFetchMovies";
-import React, { FC, useEffect, useState } from "react";
-import { usePaginatedQuery, useQuery } from "react-query";
+import { getErrorMessage, isError } from "helpers/api";
+import { paginationQueryFunction } from "helpers/query";
+import React, { FC } from "react";
+import { usePaginatedQuery } from "react-query";
 import { CardZoom } from "shared/CardZoom/CardZoom";
 import { FlexCenterHorizontally } from "shared/FlexCenterHorizontally/FlexCenterHorizontally";
 import { MovieCard } from "shared/MovieCard/MovieCard";
@@ -17,6 +17,12 @@ import { Movie } from "types/movie";
 type MovieResultsProps = {
   className?: string;
 };
+
+const StyledFlexCenterHorizontally = styled(FlexCenterHorizontally)`
+  height: 100%;
+  align-items: center;
+  padding: 2rem;
+`;
 
 const MovieResultsContainer = styled.div`
   display: grid;
@@ -45,32 +51,27 @@ const MovieResultsContainer = styled.div`
 
 const MovieResults: FC<MovieResultsProps> = (props) => {
   const { className = "" } = props;
-  const { searchValue, page } = useMovieResults();
+  const {
+    query: { resolvedData },
+  } = useMovieResults();
 
-  const { resolvedData, isLoading, error, isError } = usePaginatedQuery(
-    [OMDB_SEARCH_QUERY, searchValue, page],
-    paginationQueryFunction,
-    {
-      staleTime: 1000 * 60 * 5,
-    }
-  );
-
+  if (isError(resolvedData)) {
+    return (
+      <StyledFlexCenterHorizontally>
+        <Problem>{getErrorMessage(resolvedData)}</Problem>
+      </StyledFlexCenterHorizontally>
+    );
+  }
   return (
     <MovieResultsContainer className={className}>
-      {isLoading ? null : isError ? (
-        <FlexCenterHorizontally>
-          <Problem>{error?.Error}</Problem>
-        </FlexCenterHorizontally>
-      ) : (
-        (resolvedData?.Search?.length >= 0
-          ? resolvedData?.Search
-          : MY_FAVOURITE_MOVIES
-        )?.map?.((movie: Movie) => (
-          <CardZoom key={movie.id}>
-            <MovieCard movie={movie} />
-          </CardZoom>
-        ))
-      )}
+      {(resolvedData?.Search?.length >= 0
+        ? resolvedData?.Search
+        : MY_FAVOURITE_MOVIES
+      )?.map?.((movie: Movie) => (
+        <CardZoom key={movie.id}>
+          <MovieCard movie={movie} />
+        </CardZoom>
+      ))}
     </MovieResultsContainer>
   );
 };

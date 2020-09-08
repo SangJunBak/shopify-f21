@@ -29,7 +29,7 @@ const Text = styled.h3`
 export const Problem: FC<ProblemProps> = ({
   className = "",
   height = "5rem",
-  expand = true,
+  expand = false,
   children,
 }) => {
   return (

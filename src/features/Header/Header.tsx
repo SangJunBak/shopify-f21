@@ -7,12 +7,12 @@ import {
 } from "@material-ui/lab";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { gray2, gray3, gray5, white } from "constants/colors";
-import { barPaddingCSS, muiMediaQuery } from "constants/mixins";
+import { gray5, white } from "constants/colors";
+import { muiMediaQuery } from "constants/mixins";
 import { OMDB_SEARCH_QUERY } from "constants/queryKeys";
+import { DEFAULT_QUERY_STALE_TIME } from "constants/variables";
 import { useMovieResults } from "context/movieResults";
-import { getMovies } from "helpers/api";
-import { paginationQueryFunction } from "hooks/useFetchMovies";
+import { paginationQueryFunction } from "helpers/query";
 import React, { FC, useState } from "react";
 import { useQuery } from "react-query";
 import { Card } from "shared/Card/Card";
@@ -100,7 +100,6 @@ type Option = DefaultOption | Movie;
 
 type AutocompleteProps = {};
 
-// TODO: Alert if < 3 search results
 const Autocomplete: FC<AutocompleteProps> = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = useState(false);
@@ -112,7 +111,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
     [OMDB_SEARCH_QUERY, currentSearchText, 1],
     paginationQueryFunction,
     {
-      staleTime: 1000 * 60 * 5,
+      staleTime: DEFAULT_QUERY_STALE_TIME,
     }
   );
 
@@ -123,7 +122,8 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
 
   const defaultOption: DefaultOption = {
     id: "default",
-    title: `View all results with ${currentSearchText.trim()}`,
+    // title: `View all results with ${currentSearchText.trim()}`,
+    title: currentSearchText,
   };
 
   const options: Option[] = [defaultOption, ...(data?.Search ?? [])];
@@ -153,6 +153,10 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
         renderOption={(option, { inputValue }) => {
           const matches = match(option.title, inputValue);
           const parts = parse(option.title, matches);
+
+          if (option.id === "default") {
+            parts.unshift({ text: "View all results with ", highlight: false });
+          }
 
           return (
             <div>

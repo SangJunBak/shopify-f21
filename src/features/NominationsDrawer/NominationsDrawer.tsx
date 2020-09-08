@@ -3,6 +3,7 @@ import { bodyBackground } from "constants/theme";
 import { gray2, initial, white } from "constants/colors";
 import { barPaddingCSS } from "constants/mixins";
 import { BASE_PAGE_PADDING_REM, elevation1 } from "constants/variables";
+import { useMenuActions, useMenuState } from "context/menu";
 import { useNominationsState } from "context/nominations";
 import React, { FC, useState } from "react";
 import { CardZoom } from "shared/CardZoom/CardZoom";
@@ -65,13 +66,13 @@ const CollapseWrapper = styled.div`
 export const NominationsDrawer: FC<DrawerProps> = (props) => {
   const { className = "" } = props;
 
-  const [open, setOpen] = useState(false);
-  const onCollapse = () => setOpen((prevOpen) => !prevOpen);
+  const menuState = useMenuState();
+  const { toggleMenu } = useMenuActions();
   const { nominations } = useNominationsState();
 
   return (
     <Container className={className}>
-      <Collapse in={open}>
+      <Collapse in={menuState!.isMenuOpen}>
         <CollapseWrapper>
           {nominations.length <= 0 ? (
             <FlexCenterHorizontally>
@@ -86,10 +87,14 @@ export const NominationsDrawer: FC<DrawerProps> = (props) => {
           )}
         </CollapseWrapper>
       </Collapse>
-      <HeaderContainer onClick={onCollapse}>
+      <HeaderContainer onClick={toggleMenu}>
         <Subtitle>Nominations</Subtitle>
         <HeaderIconContainer>
-          {open ? <ExpandLess onClick={onCollapse} /> : <ExpandMore />}
+          {menuState!.isMenuOpen ? (
+            <ExpandLess onClick={toggleMenu} />
+          ) : (
+            <ExpandMore />
+          )}
         </HeaderIconContainer>
       </HeaderContainer>
     </Container>

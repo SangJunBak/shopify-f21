@@ -1,6 +1,7 @@
 import { Skeleton } from "@material-ui/lab";
 import { white } from "constants/colors";
 import { flexCol } from "constants/mixins";
+import { useMenuActions } from "context/menu";
 import {
   useNominationsDispatch,
   useNominationsState,
@@ -50,11 +51,14 @@ const Description = styled.div`
   flex: 1;
 `;
 
+const PLACEHOLDER_IMAGE_WIDTH_REM = 5.79;
+
 const ImageContainer = styled.img<{ visible: boolean }>`
   flex: 0 0 auto;
   max-height: 100%;
   border-radius: 0.25rem 0 0 0.25rem;
   display: ${({ visible }) => (visible ? "block" : "none")};
+  max-width: ${PLACEHOLDER_IMAGE_WIDTH_REM}rem;
 `;
 
 const Title = styled.h5`
@@ -63,8 +67,6 @@ const Title = styled.h5`
   overflow-y: auto;
   max-height: 3rem;
 `;
-
-const PLACEHOLDER_IMAGE_WIDTH_REM = 5.79;
 
 const EmptyImage = styled.div`
   background-color: rgba(0, 0, 0, 0.11);
@@ -92,9 +94,13 @@ export const MovieCard: FC<MovieCardProps> = (props) => {
 
   const [hasImageLoaded, setHasImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-
-  const { nominationsByID, isAtMaxCapacity } = useNominationsState();
+  const {
+    nominationsByID,
+    isAtMaxCapacity,
+    allNominations,
+  } = useNominationsState();
   const dispatch = useNominationsDispatch();
+  const { openMenu } = useMenuActions();
 
   const isNominated = !!nominationsByID[movie.id];
 
@@ -151,9 +157,12 @@ export const MovieCard: FC<MovieCardProps> = (props) => {
           ) : (
             <Button
               size="small"
-              onClick={() =>
-                dispatch?.({ type: "APPEND_NOMINATION", payload: { movie } })
-              }
+              onClick={() => {
+                if (allNominations.length <= 0) {
+                  openMenu();
+                }
+                dispatch?.({ type: "APPEND_NOMINATION", payload: { movie } });
+              }}
               disabled={isAtMaxCapacity}
             >
               Nominate

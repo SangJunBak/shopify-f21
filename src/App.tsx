@@ -1,9 +1,11 @@
 import { flexCol } from "constants/mixins";
 import { bodyBackground } from "constants/theme";
 import { BASE_PAGE_PADDING_REM } from "constants/variables";
+import { MenuProvider } from "context/menu";
 import { MovieResultsProvider } from "context/movieResults";
 import { NominationsProvider } from "context/nominations";
-import Footer from "features/Footer/Footer";
+import { Banner } from "features/Banner/Banner";
+import { Footer } from "features/Footer/Footer";
 import MovieResults from "features/MovieResults/MovieResults";
 import React from "react";
 import { NominationsDrawer } from "features/NominationsDrawer/NominationsDrawer";
@@ -38,10 +40,13 @@ function App() {
       <AppContainer>
         <StyledHeader />
         <NominationsProvider>
-          <StyledNominationsDrawer />
-          <BodyContainer>
-            <StyledMovieResults />
-          </BodyContainer>
+          <Banner />
+          <MenuProvider>
+            <StyledNominationsDrawer />
+            <BodyContainer>
+              <StyledMovieResults />
+            </BodyContainer>
+          </MenuProvider>
         </NominationsProvider>
         <Footer />
       </AppContainer>

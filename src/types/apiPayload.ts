@@ -21,7 +21,8 @@ export type apiData = {
 };
 
 export type SearchResponsePayload = {
-  Search: apiData[];
-  totalResults: string;
+  Search?: apiData[];
+  totalResults?: string;
   Response: string;
+  Error?: string;
 };
