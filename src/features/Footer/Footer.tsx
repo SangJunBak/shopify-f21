@@ -1,6 +1,5 @@
 import { CircularProgress, useMediaQuery, useTheme } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import { gray2 } from "constants/colors";
 import { divider, surface } from "constants/theme";
 import { NUM_RESULTS_PER_PAGE } from "constants/variables";
 import { useMovieResults } from "context/movieResults";

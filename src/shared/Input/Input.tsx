@@ -1,5 +1,5 @@
 import { gray3 } from "constants/colors";
-import React, { forwardRef, Ref } from "react";
+import React from "react";
 import styled from "styled-components/macro";
 import theme from "styled-theming";
 

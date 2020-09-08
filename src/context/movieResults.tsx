@@ -1,13 +1,7 @@
 import { OMDB_SEARCH_QUERY } from "constants/queryKeys";
 import { DEFAULT_QUERY_STALE_TIME } from "constants/variables";
 import { paginationQueryFunction } from "helpers/query";
-import React, {
-  useState,
-  useContext,
-  createContext,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import React, { createContext, useContext, useState } from "react";
 import { usePaginatedQuery } from "react-query";
 import { useStateTuple } from "types/useStateTuple";
 

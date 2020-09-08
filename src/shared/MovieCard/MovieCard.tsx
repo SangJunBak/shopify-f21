@@ -1,5 +1,5 @@
+import { OpenInNew } from "@material-ui/icons";
 import { Skeleton } from "@material-ui/lab";
-import { darkPurple, white } from "constants/colors";
 import { flexCol } from "constants/mixins";
 import { href, surface, textColor } from "constants/theme";
 import { useMenuActions } from "context/menu";
@@ -12,7 +12,6 @@ import { Button } from "shared/Button/Button";
 import { Card } from "shared/Card/Card";
 import { Subtitle } from "shared/Subtitle/Subtitle";
 import styled from "styled-components/macro";
-import { OpenInNew } from "@material-ui/icons";
 import { Movie } from "types/movie";
 
 export const MOVIE_CARD_MIN_WIDTH_REM = 16;

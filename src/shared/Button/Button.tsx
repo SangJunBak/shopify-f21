@@ -1,5 +1,5 @@
 import { gray3, white } from "constants/colors";
-import React, { HTMLProps } from "react";
+import { HTMLProps } from "react";
 import styled, {
   css,
   FlattenSimpleInterpolation,

@@ -1,7 +1,7 @@
 import { Collapse } from "@material-ui/core";
-import { background, divider, surface, textColor } from "constants/theme";
-import { gray2, initial, white } from "constants/colors";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { barPaddingCSS } from "constants/mixins";
+import { background, divider, surface, textColor } from "constants/theme";
 import { BASE_PAGE_PADDING_REM, elevation1 } from "constants/variables";
 import { useMenuActions, useMenuState } from "context/menu";
 import { useNominationsState } from "context/nominations";
@@ -12,7 +12,6 @@ import { MovieCard } from "shared/MovieCard/MovieCard";
 import { Problem } from "shared/Problem/Problem";
 import { Subtitle } from "shared/Subtitle/Subtitle";
 import styled from "styled-components/macro";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
 import { Movie } from "types/movie";
 
 type DrawerProps = {

@@ -1,9 +1,9 @@
 import { findAndReplaceByKey } from "helpers/immutable";
 import { useLocallyPersistedReducer } from "hooks/useLocalStorage";
 import produce, { Draft } from "immer";
+import { pull } from "lodash";
 import React, { Dispatch, useMemo } from "react";
 import { Movie } from "types/movie";
-import { pull } from "lodash";
 
 //TODO: Sync with backend data
 type State = {

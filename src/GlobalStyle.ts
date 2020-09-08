@@ -1,6 +1,5 @@
 import {
   higherSurface,
-  href,
   placeholderTextColor,
   textColor,
 } from "constants/theme";

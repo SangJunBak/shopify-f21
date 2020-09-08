@@ -1,6 +1,6 @@
+import ConfusedSpongebobURL from "assets/images/confused_spongebob.png";
 import React, { FC } from "react";
 import styled from "styled-components/macro";
-import ConfusedSpongebobURL from "assets/images/confused_spongebob.png";
 
 type ProblemProps = {
   className?: string;

@@ -1,5 +1,6 @@
 import { Zoom } from "@material-ui/core";
 import React, { FC } from "react";
+
 type CardZoomProps = { className?: string };
 
 export const CardZoom: FC<CardZoomProps> = (props) => {

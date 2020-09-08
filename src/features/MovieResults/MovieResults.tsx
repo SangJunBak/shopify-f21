@@ -1,12 +1,9 @@
 import { muiMediaQuery } from "constants/mixins";
 import { MY_FAVOURITE_MOVIES } from "constants/myFavouriteMovies";
-import { OMDB_SEARCH_QUERY } from "constants/queryKeys";
 import { BASE_PAGE_PADDING_REM } from "constants/variables";
 import { useMovieResults } from "context/movieResults";
 import { getErrorMessage, isError } from "helpers/api";
-import { paginationQueryFunction } from "helpers/query";
 import React, { FC } from "react";
-import { usePaginatedQuery } from "react-query";
 import { CardZoom } from "shared/CardZoom/CardZoom";
 import { FlexCenterHorizontally } from "shared/FlexCenterHorizontally/FlexCenterHorizontally";
 import { MovieCard } from "shared/MovieCard/MovieCard";

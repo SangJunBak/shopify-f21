@@ -1,11 +1,4 @@
 export type type = "movie" | "series";
-export type plot = "short" | "full";
-
-export type SearchByIDOrTitlePayload = {
-  // Id or Title both can't be undefined
-  i?: string; //id
-  t: string; // Title
-};
 
 export type SearchRequestPayload = {
   s: string; // Search string

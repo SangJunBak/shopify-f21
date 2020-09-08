@@ -1,4 +1,3 @@
-import { apiData } from "types/apiPayload";
 import { Movie } from "types/movie";
 
 export const MY_FAVOURITE_MOVIES: Movie[] = [

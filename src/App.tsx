@@ -1,6 +1,3 @@
-import { createMuiTheme, useMediaQuery } from "@material-ui/core";
-import { ThemeProvider as MaterialThemeProvider } from "@material-ui/styles";
-import { darkModePrimary, persianGreen } from "constants/colors";
 import { flexCol } from "constants/mixins";
 import { background } from "constants/theme";
 import { MenuProvider } from "context/menu";
@@ -9,11 +6,11 @@ import { NominationsProvider } from "context/nominations";
 import { ThemeProvider } from "context/theme";
 import { Banner } from "features/Banner/Banner";
 import { Footer } from "features/Footer/Footer";
+import { Header } from "features/Header";
 import MovieResults from "features/MovieResults/MovieResults";
+import { NominationsDrawer } from "features/NominationsDrawer/NominationsDrawer";
 import { GlobalStyle } from "GlobalStyle";
 import React from "react";
-import { NominationsDrawer } from "features/NominationsDrawer/NominationsDrawer";
-import { Header } from "features/Header";
 import styled from "styled-components/macro";
 
 const AppContainer = styled.div`
