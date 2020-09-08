@@ -5,9 +5,12 @@ import {
   Autocomplete as MaterialAutocomplete,
   AutocompleteRenderInputParams,
 } from "@material-ui/lab";
-import { gray2, gray3, white } from "constants/colors";
-import { barPaddingCSS } from "constants/mixins";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { gray2, gray3, gray5, white } from "constants/colors";
+import { barPaddingCSS, muiMediaQuery } from "constants/mixins";
 import { OMDB_SEARCH_QUERY } from "constants/queryKeys";
+import { useMovieResults } from "context/movieResults";
 import { getMovies } from "helpers/api";
 import { paginationQueryFunction } from "hooks/useFetchMovies";
 import React, { FC, useState } from "react";
@@ -17,7 +20,6 @@ import { Input } from "shared/Input/Input";
 import styled, { css } from "styled-components/macro";
 import theme from "styled-theming";
 import { Movie } from "types/movie";
-import { debounce } from "lodash";
 
 type HeaderProps = {
   className?: string;
@@ -33,10 +35,20 @@ export const topbarHeaderPadding = css`
 
 const StyledCard = styled(Card)`
   display: flex;
-  ${topbarHeaderPadding};
+  padding: 2rem 0;
   background-color: ${topbarColor};
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+
+  ${({ theme }) =>
+    muiMediaQuery(
+      theme,
+      "md",
+      `${css`
+        flex-direction: row;
+      `} ${topbarHeaderPadding}`
+    )};
 `;
 
 const Title = styled.h1`
@@ -74,7 +86,7 @@ const StyledCircularProgress = styled(CircularProgress)`
 
 const StyledSearchIcon = styled(Search)`
   position: absolute;
-
+  color: ${gray5};
   top: 6px;
   left: 6px;
 `;
@@ -93,30 +105,25 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [searchText, setCurrentSearchText] = useState<string>("");
-  const [page, setPage] = useState(1);
+  const [currentSearchText, setCurrentSearchText] = useState<string>("");
+  const { setSearchValue } = useMovieResults();
 
-  // TODO: Error states
-  const { data, isLoading, isError } = useQuery(
-    [OMDB_SEARCH_QUERY, searchText, page],
+  const { data, isLoading } = useQuery(
+    [OMDB_SEARCH_QUERY, currentSearchText, 1],
     paginationQueryFunction,
     {
       staleTime: 1000 * 60 * 5,
     }
   );
 
-  const handleInputChange = debounce(
-    (_, value: string) => {
-      setCurrentSearchText(value);
-      setOpen(value.length > 0);
-    },
-    500,
-    { leading: true }
-  );
+  const handleInputChange = (_: any, value: string) => {
+    setOpen(value.length > 0);
+    setCurrentSearchText(value);
+  };
 
   const defaultOption: DefaultOption = {
     id: "default",
-    title: `View all results with ${searchText.trim()}`,
+    title: `View all results with ${currentSearchText.trim()}`,
   };
 
   const options: Option[] = [defaultOption, ...(data?.Search ?? [])];
@@ -127,16 +134,42 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
         classes={classes}
         options={options}
         open={open}
-        onOpen={() => setOpen(searchText.length > 0)}
         onClose={() => setOpen(false)}
         loading={isLoading} // Text loading
         getOptionSelected={(option: Option, value: Option) =>
           option.id === value.id
         }
         getOptionLabel={(option: Option) => option.title}
+        filterOptions={(options, state) =>
+          options.filter((option) => {
+            return (
+              option.id === "default" ||
+              option.title
+                .toUpperCase()
+                .includes(state.inputValue.toUpperCase())
+            );
+          })
+        }
+        renderOption={(option, { inputValue }) => {
+          const matches = match(option.title, inputValue);
+          const parts = parse(option.title, matches);
+
+          return (
+            <div>
+              {parts.map((part, index) => (
+                <span
+                  key={index}
+                  style={{ fontWeight: part.highlight ? 700 : 400 }}
+                >
+                  {part.text}
+                </span>
+              ))}
+            </div>
+          );
+        }}
         renderInput={(params: AutocompleteRenderInputParams) => (
           <InputContainer ref={params.InputProps.ref}>
-            <StyledSearchIcon width="0.75rem" />
+            <StyledSearchIcon style={{ width: "1rem" }} />
             <StyledInput
               {...params.inputProps}
               onFocus={(...eventParams) => {
@@ -149,11 +182,13 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                 params?.inputProps?.onBlur?.(...eventParams);
                 setIsFocused(false);
               }}
+              placeholder="Search..."
             />
-            <StyledCircularProgress size="0.75rem" />
+            {isLoading && <StyledCircularProgress size="0.75rem" />}
           </InputContainer>
         )}
         onInputChange={handleInputChange}
+        onChange={(_, v) => setSearchValue?.(v?.title ?? "")}
         autoHighlight
         fullWidth
       />

@@ -2,8 +2,6 @@ import {
   Reducer,
   ReducerAction,
   ReducerState,
-  ReducerStateWithoutAction,
-  ReducerWithoutAction,
   useEffect,
   useReducer,
 } from "react";

@@ -1,6 +1,11 @@
+import { Skeleton } from "@material-ui/lab";
 import { white } from "constants/colors";
 import { flexCol } from "constants/mixins";
-import React, { FC } from "react";
+import {
+  useNominationsDispatch,
+  useNominationsState,
+} from "context/nominations";
+import React, { FC, useState } from "react";
 import { Button } from "shared/Button/Button";
 import { Card } from "shared/Card/Card";
 import { Subtitle } from "shared/Subtitle/Subtitle";
@@ -12,16 +17,7 @@ export const MOVIE_CARD_MIN_WIDTH_REM = 16;
 
 type MovieCardProps = {
   className?: string;
-  movie?: Movie;
-};
-
-const SAMPLE_MOVIE = {
-  poster:
-    "https://m.media-amazon.com/images/M/MV5BMTg0NTM3MTI1MF5BMl5BanBnXkFtZTgwMTAzNTAzNzE@._V1_SX300.jpg",
-  title: "Hello, My Name Is Doris",
-  type: "movie",
-  year: "2015",
-  id: "tt3766394",
+  movie: Movie;
 };
 
 const StyledCard = styled(Card)`
@@ -54,10 +50,11 @@ const Description = styled.div`
   flex: 1;
 `;
 
-const ImageContainer = styled.img`
+const ImageContainer = styled.img<{ visible: boolean }>`
   flex: 0 0 auto;
   max-height: 100%;
   border-radius: 0.25rem 0 0 0.25rem;
+  display: ${({ visible }) => (visible ? "block" : "none")};
 `;
 
 const Title = styled.h5`
@@ -67,37 +64,101 @@ const Title = styled.h5`
   max-height: 3rem;
 `;
 
+const PLACEHOLDER_IMAGE_WIDTH_REM = 5.79;
+
+const EmptyImage = styled.div`
+  background-color: rgba(0, 0, 0, 0.11);
+  display: flex;
+  height: 100%;
+  width: ${PLACEHOLDER_IMAGE_WIDTH_REM}rem;
+  justify-content: center;
+  align-items: center;
+  color: ${white};
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
+`;
+
+const Hyperlink = styled.a`
+  color: #2196f3;
 `;
 
 const createIMDBLink = (imdbID: string): string =>
   `https://www.imdb.com/title/${imdbID}`;
 
 export const MovieCard: FC<MovieCardProps> = (props) => {
-  const { className = "", movie = {} as Movie } = props;
+  const { className = "", movie } = props;
+
+  const [hasImageLoaded, setHasImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const { nominationsByID, isAtMaxCapacity } = useNominationsState();
+  const dispatch = useNominationsDispatch();
+
+  const isNominated = !!nominationsByID[movie.id];
+
   return (
     <StyledCard className={className}>
-      <ImageContainer src={movie.poster} alt={movie.title} />
-      {/*TODO: Create alt and placeholder*/}
+      <ImageContainer
+        src={movie.poster}
+        alt={movie.title}
+        onLoad={() => setHasImageLoaded(true)}
+        onError={() => setImageError(true)}
+        visible={hasImageLoaded && !imageError}
+      />
+      {imageError ? (
+        <EmptyImage>
+          <span>N/A</span>
+        </EmptyImage>
+      ) : (
+        !hasImageLoaded && (
+          <Skeleton
+            variant="rect"
+            width={`${PLACEHOLDER_IMAGE_WIDTH_REM}rem`}
+            height="100%"
+          />
+        )
+      )}
       <Content>
         <Description>
           <Title>
             {movie.title}
-            <a
+            <Hyperlink
               href={createIMDBLink(movie.id)}
               target="_blank"
               rel="noopener noreferrer"
               title="IMDB Link"
             >
               <StyledOpenInNew />
-            </a>
+            </Hyperlink>
           </Title>
           <Subtitle>({movie.year})</Subtitle>
         </Description>
         <ButtonContainer>
-          <Button size="small">Nominate</Button>
-          <SecondaryButton size="small">More Info</SecondaryButton>
+          {isNominated ? (
+            <Button
+              size="small"
+              onClick={() =>
+                dispatch?.({
+                  type: "REMOVE_NOMINATION_BY_ID",
+                  payload: { id: movie.id },
+                })
+              }
+            >
+              Remove
+            </Button>
+          ) : (
+            <Button
+              size="small"
+              onClick={() =>
+                dispatch?.({ type: "APPEND_NOMINATION", payload: { movie } })
+              }
+              disabled={isAtMaxCapacity}
+            >
+              Nominate
+            </Button>
+          )}
         </ButtonContainer>
       </Content>
     </StyledCard>

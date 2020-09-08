@@ -1,6 +1,6 @@
 import { Theme } from "@material-ui/core";
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
-import { css, FlattenInterpolation } from "styled-components/macro";
+import { css } from "styled-components/macro";
 
 export const barPaddingCSS = css`
   padding: 0.25rem 0.5rem;
@@ -18,11 +18,7 @@ export const flexWrap = css`
   align-items: flex-start;
 `;
 
-export const muiMediaQuery = (
-  theme: Theme,
-  bp: Breakpoint,
-  css: FlattenInterpolation<any>
-) => `
+export const muiMediaQuery = (theme: Theme, bp: Breakpoint, css: string) => `
   ${theme.breakpoints.up(bp)} {
     ${css}
   }

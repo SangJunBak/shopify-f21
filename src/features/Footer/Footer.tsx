@@ -27,7 +27,7 @@ export const Footer: FC<FooterProps> = (props) => {
       <Pagination
         count={10}
         color="primary"
-        size={isLargerThanMD ? "large" : "small"}
+        size={isLargerThanMD ? "medium" : "small"}
       />
     </FooterContainer>
   );

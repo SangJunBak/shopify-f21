@@ -1,13 +1,13 @@
 import { findAndReplaceByKey } from "helpers/immutable";
 import { useLocallyPersistedReducer } from "hooks/useLocalStorage";
 import produce, { Draft } from "immer";
-import React, { Dispatch } from "react";
+import React, { Dispatch, useMemo } from "react";
 import { Movie } from "types/movie";
-import { remove } from "lodash";
+import { pull } from "lodash";
 
 type State = {
-  readonly nominationsByID: Record<string, Movie>;
-  readonly allNominations: string[];
+  nominationsByID: Record<string, Movie>;
+  allNominations: string[];
 };
 type Action =
   | {
@@ -65,7 +65,7 @@ const nominationsReducer = produce((state: Draft<State>, action: Action) => {
         payload: { id },
       } = action;
       delete state.nominationsByID[id];
-      remove(state.allNominations, id);
+      pull(state.allNominations, id);
       return;
     }
     case "REPLACE_NOMINATION_BY_ID": {
@@ -111,7 +111,21 @@ function useNominationsState() {
       "useNominationsState must be used within a NominationsProvider"
     );
   }
-  return nominationsState;
+
+  const nominations: Movie[] = useMemo(
+    () =>
+      nominationsState?.allNominations.map(
+        (id) => nominationsState?.nominationsByID[id]
+      ) ?? [],
+    [nominationsState]
+  );
+
+  return {
+    nominationsByID: nominationsState?.nominationsByID ?? {},
+    allNominations: nominationsState?.allNominations ?? [],
+    nominations,
+    isAtMaxCapacity: isAtMaxCapacity(nominationsState?.allNominations || []),
+  };
 }
 
 function useNominationsDispatch() {
