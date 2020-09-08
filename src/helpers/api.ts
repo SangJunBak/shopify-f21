@@ -11,7 +11,7 @@ const httpClient = axios.create({
     apikey: getOMDBKey(),
     type: "movie",
   },
-  baseURL: "http://www.omdbapi.com/",
+  baseURL: "https://www.omdbapi.com/",
 });
 
 export const isError = (response: SearchResponsePayload) => {
