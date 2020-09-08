@@ -1,44 +1,43 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Links
+Live Demo: https://shoppies-w21.herokuapp.com/
 
-## Available Scripts
+Technical Requirements: https://docs.google.com/document/d/1AZO0BZwn1Aogj4f3PDNe1mhq8pKsXZxtrG--EIbP_-w/edit#heading=h.31w9woubunro
 
-In the project directory, you can run:
+## Additional Features
+* Autocomplete search bar
+* Fully responsive (Go test it on your phone)
+* Dark mode (flick that switch next to the "Shoppies" heading)
+* Caching implemented for OMDB queries(noticeable when searching for the same keyword or flipping through pages in the movies list)
+* Animations
+* Nominations are saved via localStorage
+* IMDB links on each movie/nomination
+* Loading and error states (type and enter "he" in the search bar. Also each loading image will have a placeholder)
+
+
+## More about caching
+When you start typing for the movie in the searchbar, we prefetch the OMDB results making it especially fast when you press search!
+
+## Notes
+* The initial movie list has some of my favourite movies. Check em out, they're good!
+* For the cache, the stale time for each query is 5 minutes
+
+## Future Improvements
+* If I had more time, I'd right unit tests for my reducers and maybe some integration tests for the scrolling logic using Jest, RTL, and RTL/hooks
+* Currently, we use localStorage to store all our nominations. However, nothing is implemented to keep the nomination data and the server data in sync. This is a possible edge case.
+* A "View more button" for each movie which shows more details from the API
+* Ability to filter by year 
+* Right now it's wonky to have two theme providers(one for styled-components, one for material-ui). It'd be best to clean that up to reduce duplicate logic in the future
+* A better design with more vector art
+
+## Main tech stack
+* React Hooks + Context for global state management
+* react-query for OMDB state layer
+* styled-components for CSS and component systems
+* Material-UI for certain components and breakpoint management 
+* Immer for immutability
 
 ### `yarn start`
-
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
