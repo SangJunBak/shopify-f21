@@ -99,11 +99,7 @@ export const NominationsDrawer: FC<DrawerProps> = (props) => {
       <HeaderContainer onClick={toggleMenu}>
         <Subtitle>Nominations</Subtitle>
         <HeaderIconContainer>
-          {menuState!.isMenuOpen ? (
-            <ExpandLess onClick={toggleMenu} />
-          ) : (
-            <ExpandMore />
-          )}
+          {menuState!.isMenuOpen ? <ExpandLess /> : <ExpandMore />}
         </HeaderIconContainer>
       </HeaderContainer>
     </Container>

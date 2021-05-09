@@ -50,7 +50,7 @@ function useMenuActions() {
     () =>
       setMenu?.((state) => ({
         ...state,
-        isMenuOpen: true,
+        isMenuOpen: false,
       })),
     [setMenu]
   );
