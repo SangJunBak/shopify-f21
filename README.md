@@ -4,6 +4,8 @@ Live Demo: https://shoppies-f21.netlify.app/
 
 Technical Requirements: https://docs.google.com/document/d/1AZO0BZwn1Aogj4f3PDNe1mhq8pKsXZxtrG--EIbP_-w/edit#heading=h.31w9woubunro
 
+## Tree Diagram
+![Tree Diagram](https://i.ibb.co/gD67bzZ/Screen-Shot-2021-06-15-at-1-24-43-PM.png "Tree Diagram")
 ## Additional Features
 
 - Autocomplete search bar
@@ -19,7 +21,7 @@ Technical Requirements: https://docs.google.com/document/d/1AZO0BZwn1Aogj4f3PDNe
 ## More about caching
 
 When you start typing for the movie in the searchbar, we prefetch the OMDB results making it especially fast when you press search!
-
+https://github.com/SangJunBak/shopify-f21
 ## Notes
 
 - The initial movie list has some of my favourite movies. Check em out, they're good!
